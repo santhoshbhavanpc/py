@@ -1,0 +1,25 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
+
+nltk.download("punkt")
+nltk.download("stopwords")
+
+
+text = "Perform tokenization, stemming, and stop-word removal on sample text."
+
+
+ps = PorterStemmer()
+stop_words = set(stopwords.words("english"))
+
+
+tokens = word_tokenize(text)
+filtered = [w for w in tokens if w.isalpha() and w.lower() not in stop_words]
+stemmed = [ps.stem(w) for w in filtered]
+
+
+print("Tokens:", tokens)
+print("After stopword removal:", filtered)
+print("After stemming:", stemmed)
