@@ -1,0 +1,44 @@
+import heapq
+
+graph = {
+    'M': ['N', 'O'],
+    'N': ['P', 'Q'],
+    'O': ['R'],
+    'P': ['S'],
+    'Q': ['T'],
+    'R': ['S'],
+    'S': ['T'],
+    'T': []
+}
+
+heuristic_values = {
+    'M': 8,
+    'N': 6,
+    'O': 5,
+    'P': 4,
+    'Q': 7,
+    'R': 3,
+    'S': 2,
+    'T': 0
+}
+
+def greedy_bfs(start, goal):
+    visited = set()
+    queue = [(heuristic_values[start], [start])]
+    print("\nGreedy Best-First Search Path:")
+    while queue:
+        h, path = heapq.heappop(queue)
+        node = path[-1]
+        if node in visited:
+            continue
+        print("Visiting:", node)
+        if node == goal:
+            print("Goal found! Path:", ' -> '.join(path))
+            return
+        visited.add(node)
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                heapq.heappush(queue, (heuristic_values[neighbor], path + [neighbor]))
+    print("Goal not found.")
+
+greedy_bfs('M', 'T')
